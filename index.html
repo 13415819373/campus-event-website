@@ -4,16 +4,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="发现校园里的讲座、竞赛、社团和文娱活动。">
-  <title>校园活动站｜发现校园精彩</title>
+  <title>校园活动站</title>
 
   <style>
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -21,7 +16,6 @@
       font-family: "Microsoft YaHei", Arial, sans-serif;
       color: #243047;
       background-color: #f5f7fb;
-      line-height: 1.6;
     }
 
     a {
@@ -29,10 +23,8 @@
       text-decoration: none;
     }
 
-    /* 网站顶部 */
     header {
-      min-height: 76px;
-      padding: 0 9%;
+      padding: 22px 9%;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -41,110 +33,63 @@
     }
 
     .logo {
-      display: flex;
-      align-items: center;
-      gap: 12px;
       color: #243b70;
       font-size: 20px;
       font-weight: 700;
     }
 
-    .logo-icon {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #ffffff;
-      background-color: #4263eb;
-      border-radius: 10px;
-    }
-
     nav {
       display: flex;
-      align-items: center;
       gap: 36px;
     }
 
     nav a {
       color: #69758b;
       font-size: 15px;
-      transition: color 0.2s;
     }
 
-    nav a:hover,
-    nav a.active {
+    nav a:hover {
       color: #4263eb;
     }
 
-    /* 页面介绍区域 */
     .hero {
-      min-height: 340px;
       margin: 36px 9% 60px;
       padding: 55px 65px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      overflow: hidden;
       color: #ffffff;
       background: linear-gradient(120deg, #304fbd, #5479ed);
       border-radius: 20px;
     }
 
-    .hero-content {
-      max-width: 620px;
-    }
-
-    .hero-label,
-    .section-label {
+    .hero-label {
+      color: #d4ddff;
       font-size: 12px;
       font-weight: 700;
       letter-spacing: 3px;
     }
 
-    .hero-label {
-      color: #d4ddff;
-    }
-
     .hero h1 {
       margin: 16px 0;
       font-size: 36px;
-      line-height: 1.4;
     }
 
     .hero p {
       max-width: 560px;
-      margin-bottom: 28px;
       color: #e1e8ff;
       font-size: 15px;
+      line-height: 1.8;
     }
 
     .primary-button {
       display: inline-block;
+      margin-top: 16px;
       padding: 11px 25px;
       color: #3657c9;
       background-color: #ffffff;
       border-radius: 8px;
       font-size: 14px;
       font-weight: 700;
-      transition: transform 0.2s;
     }
 
-    .primary-button:hover {
-      transform: translateY(-3px);
-    }
-
-    .hero-decoration {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      color: rgba(255, 255, 255, 0.16);
-      font-size: 42px;
-      font-weight: 800;
-      line-height: 1.1;
-    }
-
-    /* 活动列表区域 */
     .events-section {
       margin: 0 9% 70px;
     }
@@ -158,12 +103,14 @@
 
     .section-label {
       color: #4263eb;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 3px;
     }
 
     .section-heading h2 {
       margin: 8px 0;
       font-size: 28px;
-      color: #243047;
     }
 
     .section-heading p {
@@ -180,6 +127,54 @@
       font-size: 13px;
     }
 
+    /* 搜索和分类区域 */
+    .event-tools {
+      margin-bottom: 26px;
+    }
+
+    .search-input {
+      width: 420px;
+      height: 44px;
+      padding: 0 16px;
+      color: #243047;
+      background-color: #ffffff;
+      border: 1px solid #e1e6f0;
+      border-radius: 8px;
+      outline: none;
+    }
+
+    .search-input:focus {
+      border-color: #4263eb;
+    }
+
+    .category-filters {
+      margin-top: 18px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .category-filters button {
+      padding: 8px 17px;
+      color: #69758b;
+      background-color: #ffffff;
+      border: 1px solid #e1e6f0;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+    }
+
+    .category-filters button:hover {
+      color: #4263eb;
+      border-color: #4263eb;
+    }
+
+    .category-filters button.active {
+      color: #ffffff;
+      background-color: #4263eb;
+      border-color: #4263eb;
+    }
+
+    /* 活动卡片 */
     .event-list {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -249,6 +244,7 @@
       min-height: 48px;
       color: #7d879a;
       font-size: 14px;
+      line-height: 1.7;
     }
 
     .event-meta {
@@ -263,17 +259,28 @@
       font-size: 13px;
     }
 
-    .text-link {
-      color: #4263eb;
+    /* 没有搜索结果 */
+    .empty-message {
+      grid-column: 1 / -1;
+      padding: 55px 20px;
+      color: #8993a6;
+      text-align: center;
+      background-color: #ffffff;
+      border: 1px dashed #dce2ed;
+      border-radius: 14px;
+    }
+
+    .empty-message h3 {
+      margin: 0 0 8px;
+      color: #53617a;
+      font-size: 18px;
+    }
+
+    .empty-message p {
+      margin: 0;
       font-size: 14px;
-      font-weight: 700;
     }
 
-    .text-link:hover {
-      color: #243b9e;
-    }
-
-    /* 关于我们 */
     .about-section {
       margin: 0 9% 70px;
       padding: 45px 50px;
@@ -283,7 +290,6 @@
     }
 
     .about-section h2 {
-      max-width: 650px;
       margin: 14px auto;
       color: #283f7e;
       font-size: 25px;
@@ -294,31 +300,24 @@
       font-size: 14px;
     }
 
-    /* 网站底部 */
     footer {
       padding: 28px 9%;
-      text-align: center;
       color: #aab3c3;
       background-color: #202d49;
+      text-align: center;
       font-size: 13px;
-    }
-
-    footer p {
-      margin: 5px 0;
     }
   </style>
 </head>
 
 <body>
+
   <!-- 网站顶部 -->
   <header>
-    <a class="logo" href="#" aria-label="校园活动站首页">
-      <span class="logo-icon">C</span>
-      <span>校园活动站</span>
-    </a>
+    <a class="logo" href="#">校园活动站</a>
 
-    <nav aria-label="主导航">
-      <a class="active" href="#home">首页</a>
+    <nav>
+      <a href="#home">首页</a>
       <a href="#events">活动列表</a>
       <a href="#about">关于我们</a>
     </nav>
@@ -326,32 +325,25 @@
 
   <main id="home">
 
-    <!-- 网站介绍 -->
+    <!-- 页面介绍 -->
     <section class="hero">
-      <div class="hero-content">
-        <span class="hero-label">CAMPUS EVENTS</span>
+      <span class="hero-label">CAMPUS EVENTS</span>
 
-        <h1>发现身边值得参加的校园活动</h1>
+      <h1>发现身边值得参加的校园活动</h1>
 
-        <p>
-          从学术讲座到社团活动，从创新竞赛到校园演出，
-          在这里找到你感兴趣的下一站。
-        </p>
+      <p>
+        从学术讲座到社团活动，从创新竞赛到校园演出，
+        在这里找到你感兴趣的下一站。
+      </p>
 
-        <a class="primary-button" href="#events">
-          看看近期活动
-        </a>
-      </div>
-
-      <div class="hero-decoration">
-        <span>校园</span>
-        <span>生活</span>
-        <span>精彩</span>
-      </div>
+      <a class="primary-button" href="#events">
+        看看近期活动
+      </a>
     </section>
 
     <!-- 活动列表 -->
     <section class="events-section" id="events">
+
       <div class="section-heading">
         <div>
           <span class="section-label">WHAT'S ON</span>
@@ -359,12 +351,48 @@
           <p>挑选一场感兴趣的活动，开启新的校园体验。</p>
         </div>
 
-        <span class="event-count" id="eventCount">0 场精彩活动</span>
+        <span class="event-count" id="eventCount">
+          找到 0 场活动
+        </span>
       </div>
 
-      <!-- 活动卡片由 JavaScript 自动生成 -->
-      <div class="event-list" id="eventList">
+      <!-- 搜索框和分类按钮 -->
+      <div class="event-tools">
+
+        <input
+          class="search-input"
+          type="text"
+          id="searchInput"
+          placeholder="搜索活动名称或关键词..."
+        >
+
+        <div class="category-filters">
+          <button class="active" type="button" data-category="all">
+            全部活动
+          </button>
+
+          <button type="button" data-category="学术讲座">
+            学术讲座
+          </button>
+
+          <button type="button" data-category="创新竞赛">
+            创新竞赛
+          </button>
+
+          <button type="button" data-category="社团活动">
+            社团活动
+          </button>
+
+          <button type="button" data-category="校园文娱">
+            校园文娱
+          </button>
+        </div>
+
       </div>
+
+      <!-- 活动卡片由 JavaScript 生成 -->
+      <div class="event-list" id="eventList"></div>
+
     </section>
 
     <!-- 关于我们 -->
@@ -388,7 +416,7 @@
   </footer>
 
   <script>
-    // 1. 使用数组保存校园活动数据
+    // 1. 校园活动数据
     const events = [
       {
         title: "人工智能与未来生活",
@@ -424,51 +452,107 @@
       }
     ];
 
-    // 2. 找到页面中放置活动卡片的位置
+    // 2. 获取页面元素
     const eventList = document.querySelector("#eventList");
     const eventCount = document.querySelector("#eventCount");
+    const searchInput = document.querySelector("#searchInput");
 
-    // 3. 根据活动数据生成 HTML
-    function renderEvents() {
+    const categoryButtons = document.querySelectorAll(
+      ".category-filters button"
+    );
+
+    // 3. 保存当前选择的分类
+    let currentCategory = "all";
+
+    // 4. 根据活动数据生成卡片
+    function renderEvents(eventData) {
       let html = "";
 
-      events.forEach((event, index) => {
-        html += `
-          <article class="event-card">
-            <div class="event-card-top">
-              <span class="event-category ${event.categoryClass}">
-                ${event.category}
-              </span>
-              <span class="event-number">
-                ${String(index + 1).padStart(2, "0")}
-              </span>
-            </div>
-
-            <h3>${event.title}</h3>
-
-            <p class="event-description">
-              ${event.description}
-            </p>
-
-            <div class="event-meta">
-              <p>📅 ${event.time}</p>
-              <p>📍 ${event.location}</p>
-            </div>
-
-            <a class="text-link" href="#about">了解详情 →</a>
-          </article>
+      if (eventData.length === 0) {
+        html = `
+          <div class="empty-message">
+            <h3>没有找到相关活动</h3>
+            <p>试试其他关键词或选择不同的活动分类吧。</p>
+          </div>
         `;
-      });
+      } else {
+        eventData.forEach(function (event) {
+          const index = events.indexOf(event);
 
-      // 4. 将生成的 HTML 放入页面
+          html += `
+            <article class="event-card">
+              <div class="event-card-top">
+                <span class="event-category ${event.categoryClass}">
+                  ${event.category}
+                </span>
+
+                <span class="event-number">
+                  ${String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <h3>${event.title}</h3>
+
+              <p class="event-description">
+                ${event.description}
+              </p>
+
+              <div class="event-meta">
+                <p>📅 ${event.time}</p>
+                <p>📍 ${event.location}</p>
+              </div>
+            </article>
+          `;
+        });
+      }
+
       eventList.innerHTML = html;
-
-      // 5. 更新活动数量
-      eventCount.textContent = `${events.length} 场精彩活动`;
+      eventCount.textContent = `找到 ${eventData.length} 场活动`;
     }
 
-    // 页面加载后生成活动列表
-    renderEvents();
+    // 5. 根据关键词和分类筛选活动
+    function filterEvents() {
+      const keyword = searchInput.value.trim().toLowerCase();
+
+      const filteredEvents = events.filter(function (event) {
+        const matchKeyword =
+          event.title.toLowerCase().includes(keyword) ||
+          event.description.toLowerCase().includes(keyword) ||
+          event.category.toLowerCase().includes(keyword);
+
+        const matchCategory =
+          currentCategory === "all" ||
+          event.category === currentCategory;
+
+        return matchKeyword && matchCategory;
+      });
+
+      renderEvents(filteredEvents);
+    }
+
+    // 6. 监听搜索框输入
+    searchInput.addEventListener("input", function () {
+      filterEvents();
+    });
+
+    // 7. 监听分类按钮点击
+    categoryButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        currentCategory = button.dataset.category;
+
+        categoryButtons.forEach(function (item) {
+          item.classList.remove("active");
+        });
+
+        button.classList.add("active");
+
+        filterEvents();
+      });
+    });
+
+    // 8. 页面加载时显示全部活动
+    filterEvents();
   </script>
+
 </body>
 </html>
