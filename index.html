@@ -259,6 +259,21 @@
       font-size: 13px;
     }
 
+    /* 详情按钮 */
+    .detail-button {
+      padding: 0;
+      color: #4263eb;
+      background: none;
+      border: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .detail-button:hover {
+      color: #243b9e;
+    }
+
     /* 没有搜索结果 */
     .empty-message {
       grid-column: 1 / -1;
@@ -306,6 +321,154 @@
       background-color: #202d49;
       text-align: center;
       font-size: 13px;
+    }
+
+    /* 活动详情弹窗 */
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background-color: rgba(20, 30, 55, 0.55);
+    }
+
+    .modal.show {
+      display: flex;
+    }
+
+    .modal-content {
+      position: relative;
+      width: 560px;
+      padding: 32px;
+      background-color: #ffffff;
+      border-radius: 16px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 18px;
+      right: 20px;
+      width: 32px;
+      height: 32px;
+      color: #7d879a;
+      background-color: #f2f4f8;
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+    }
+
+    .modal-category {
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    .modal-content h2 {
+      margin: 0 35px 15px 0;
+      color: #263653;
+      font-size: 24px;
+    }
+
+    .modal-description {
+      color: #69758b;
+      font-size: 14px;
+      line-height: 1.8;
+    }
+
+    .modal-meta {
+      margin: 22px 0;
+      padding: 16px;
+      background-color: #f5f7fb;
+      border-radius: 10px;
+    }
+
+    .modal-meta p {
+      margin: 7px 0;
+      color: #53617a;
+      font-size: 14px;
+    }
+
+    /* 报名表单 */
+    .signup-section {
+      margin-top: 26px;
+      padding-top: 24px;
+      border-top: 1px solid #edf0f5;
+    }
+
+    .signup-section h3 {
+      margin: 0 0 18px;
+      color: #263653;
+      font-size: 18px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 7px;
+      color: #53617a;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 11px 13px;
+      color: #243047;
+      background-color: #ffffff;
+      border: 1px solid #dfe4ed;
+      border-radius: 7px;
+      outline: none;
+      font-size: 14px;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      border-color: #4263eb;
+    }
+
+    .form-group textarea {
+      height: 85px;
+      resize: vertical;
+    }
+
+    .submit-button {
+      width: 100%;
+      padding: 12px;
+      color: #ffffff;
+      background-color: #4263eb;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .submit-button:hover {
+      background-color: #304fbd;
+    }
+
+    /* 报名成功提示 */
+    .success-message {
+      display: none;
+      margin-top: 18px;
+      padding: 16px;
+      color: #087f5b;
+      background-color: #e3f8ef;
+      border-radius: 8px;
+      font-size: 14px;
+      text-align: center;
+    }
+
+    .success-message.show {
+      display: block;
     }
   </style>
 </head>
@@ -415,6 +578,97 @@
     <p>活动信息仅用于课程项目演示。</p>
   </footer>
 
+  <!-- 活动详情弹窗 -->
+  <div class="modal" id="detailModal">
+    <div
+      class="modal-content"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modalTitle"
+    >
+
+      <button
+        class="modal-close"
+        type="button"
+        id="closeModal"
+        aria-label="关闭弹窗"
+      >×</button>
+
+      <div
+        id="modalCategory"
+        class="event-category modal-category"
+      ></div>
+
+      <h2 id="modalTitle"></h2>
+
+      <p
+        class="modal-description"
+        id="modalDescription"
+      ></p>
+
+      <div class="modal-meta">
+        <p id="modalTime"></p>
+        <p id="modalLocation"></p>
+      </div>
+
+      <!-- 报名表单 -->
+      <div class="signup-section">
+        <h3>活动报名</h3>
+
+        <form id="signupForm">
+
+          <div class="form-group">
+            <label for="userName">姓名</label>
+            <input
+              type="text"
+              id="userName"
+              name="userName"
+              placeholder="请输入姓名"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="userPhone">联系方式</label>
+            <input
+              type="tel"
+              id="userPhone"
+              name="userPhone"
+              placeholder="请输入联系方式"
+              pattern="[0-9+\-\s]{6,20}"
+              title="请输入有效的联系方式"
+              required
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="userRemark">报名备注（选填）</label>
+            <textarea
+              id="userRemark"
+              name="userRemark"
+              placeholder="有什么想补充的吗？"
+            ></textarea>
+          </div>
+
+          <button class="submit-button" type="submit">
+            提交报名
+          </button>
+
+        </form>
+
+        <div
+          class="success-message"
+          id="successMessage"
+          role="status"
+          aria-live="polite"
+        >
+          报名成功！期待在活动现场见到你。
+        </div>
+      </div>
+
+    </div>
+  </div>
+
   <script>
     // 1. 校园活动数据
     const events = [
@@ -422,7 +676,7 @@
         title: "人工智能与未来生活",
         category: "学术讲座",
         categoryClass: "category-lecture",
-        description: "了解人工智能的发展趋势，以及它将如何影响我们的学习与生活。",
+        description: "了解人工智能的发展趋势，以及它将如何影响我们的学习与生活。本次讲座将介绍人工智能的基础应用、发展方向，以及它在教育、医疗和日常生活中的实际应用。",
         time: "2026年11月12日 14:00",
         location: "图书馆报告厅"
       },
@@ -430,7 +684,7 @@
         title: "校园创意编程挑战赛",
         category: "创新竞赛",
         categoryClass: "category-contest",
-        description: "和队友一起动手，把一个有趣的想法变成可以运行的小作品。",
+        description: "和队友一起动手，把一个有趣的想法变成可以运行的小作品。欢迎对编程和创新设计感兴趣的同学参加。",
         time: "2026年11月16日 09:00",
         location: "信息楼 301 室"
       },
@@ -438,7 +692,7 @@
         title: "摄影社秋日外拍",
         category: "社团活动",
         categoryClass: "category-club",
-        description: "带上相机或手机，和摄影社成员一起记录校园里的秋日风景。",
+        description: "带上相机或手机，和摄影社成员一起记录校园里的秋日风景。无论你是否有摄影经验，都欢迎加入。",
         time: "2026年11月18日 16:00",
         location: "校园东门集合"
       },
@@ -446,7 +700,7 @@
         title: "校园草坪音乐会",
         category: "校园文娱",
         categoryClass: "category-entertainment",
-        description: "在轻松的夜晚听听音乐，认识新朋友，感受校园的活力。",
+        description: "在轻松的夜晚听听音乐，认识新朋友，感受校园的活力。现场将有校园乐队和学生音乐爱好者带来精彩表演。",
         time: "2026年11月21日 19:00",
         location: "中心草坪"
       }
@@ -461,8 +715,14 @@
       ".category-filters button"
     );
 
-    // 3. 保存当前选择的分类
+    const detailModal = document.querySelector("#detailModal");
+    const closeModal = document.querySelector("#closeModal");
+    const signupForm = document.querySelector("#signupForm");
+    const successMessage = document.querySelector("#successMessage");
+
+    // 3. 保存当前选择的分类和活动
     let currentCategory = "all";
+    let currentEvent = null;
 
     // 4. 根据活动数据生成卡片
     function renderEvents(eventData) {
@@ -501,6 +761,14 @@
                 <p>📅 ${event.time}</p>
                 <p>📍 ${event.location}</p>
               </div>
+
+              <button
+                class="detail-button"
+                type="button"
+                data-index="${index}"
+              >
+                了解详情 →
+              </button>
             </article>
           `;
         });
@@ -550,7 +818,99 @@
       });
     });
 
-    // 8. 页面加载时显示全部活动
+    // 8. 打开活动详情
+    function openEventDetail(index) {
+      const event = events[index];
+
+      if (!event) {
+        return;
+      }
+
+      currentEvent = event;
+
+      document.querySelector("#modalCategory").textContent =
+        event.category;
+
+      document.querySelector("#modalCategory").className =
+        `event-category modal-category ${event.categoryClass}`;
+
+      document.querySelector("#modalTitle").textContent =
+        event.title;
+
+      document.querySelector("#modalDescription").textContent =
+        event.description;
+
+      document.querySelector("#modalTime").textContent =
+        `📅 ${event.time}`;
+
+      document.querySelector("#modalLocation").textContent =
+        `📍 ${event.location}`;
+
+      // 每次打开详情时重置表单和成功提示
+      signupForm.reset();
+      successMessage.classList.remove("show");
+
+      detailModal.classList.add("show");
+    }
+
+    // 9. 监听活动详情按钮
+    eventList.addEventListener("click", function (event) {
+      const button = event.target.closest(".detail-button");
+
+      if (!button) {
+        return;
+      }
+
+      const index = Number(button.dataset.index);
+
+      openEventDetail(index);
+    });
+
+    // 10. 关闭活动详情弹窗
+    function hideModal() {
+      detailModal.classList.remove("show");
+      currentEvent = null;
+    }
+
+    closeModal.addEventListener("click", function () {
+      hideModal();
+    });
+
+    // 点击弹窗外部区域关闭
+    detailModal.addEventListener("click", function (event) {
+      if (event.target === detailModal) {
+        hideModal();
+      }
+    });
+
+    // 11. 处理报名表单提交
+    signupForm.addEventListener("submit", function (event) {
+      event.preventDefault();
+
+      if (!currentEvent) {
+        return;
+      }
+
+      const formData = new FormData(signupForm);
+
+      const signupInfo = {
+        eventTitle: currentEvent.title,
+        name: formData.get("userName"),
+        phone: formData.get("userPhone"),
+        remark: formData.get("userRemark")
+      };
+
+      // 输出报名信息，便于观察表单数据
+      console.log("报名信息：", signupInfo);
+
+      // 显示报名成功提示
+      successMessage.classList.add("show");
+
+      // 清空表单
+      signupForm.reset();
+    });
+
+    // 12. 页面加载时显示全部活动
     filterEvents();
   </script>
 
